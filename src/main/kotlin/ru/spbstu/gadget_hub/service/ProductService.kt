@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service
 import ru.spbstu.gadget_hub.model.dto.PageResponse
 import ru.spbstu.gadget_hub.model.dto.ProductResponse
 import ru.spbstu.gadget_hub.model.dto.build
-import ru.spbstu.gadget_hub.model.dto.paged
 import ru.spbstu.gadget_hub.model.entities.Product
 import ru.spbstu.gadget_hub.model.entities.Sort
 import ru.spbstu.gadget_hub.model.entities.Tags
