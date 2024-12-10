@@ -3,6 +3,7 @@ package ru.spbstu.gadget_hub.model.dto
 import ru.spbstu.gadget_hub.model.entities.Product
 
 data class ProductResponse(
+        val id: Int,
         val name: String,
         val desc: String,
         val price: Int,
@@ -16,6 +17,7 @@ data class ProductResponse(
 
 fun Product.build(): ProductResponse {
     return ProductResponse(
+            id = this.id,
             name = this.name,
             desc = this.desc,
             price = this.price,
