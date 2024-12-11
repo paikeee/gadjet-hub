@@ -42,9 +42,10 @@ class SecurityConfig {
     ): DefaultSecurityFilterChain {
         http
                 .csrf { it.disable() }
+                .cors { it.disable() }
                 .authorizeHttpRequests {
                     it
-                            .requestMatchers("/login", "/main")
+                            .requestMatchers("/login", "/goods/hit", "/goods/new")
                             .permitAll()
                             .anyRequest()
                             .fullyAuthenticated()
