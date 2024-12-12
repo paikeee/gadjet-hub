@@ -13,8 +13,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.DefaultSecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
+import org.springframework.web.filter.CorsFilter
 import ru.spbstu.gadget_hub.repositories.UserRepository
 import ru.spbstu.gadget_hub.service.JwtUserDetailsService
+
 
 @Configuration
 class SecurityConfig {
@@ -42,7 +46,7 @@ class SecurityConfig {
     ): DefaultSecurityFilterChain {
         http
                 .csrf { it.disable() }
-                .cors { it.disable() }
+                .cors { corsFilter() }
                 .authorizeHttpRequests {
                     it
                             .requestMatchers("/login", "/goods/hit", "/goods/new")
@@ -56,6 +60,18 @@ class SecurityConfig {
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
         return http.build()
+    }
+
+    @Bean
+    fun corsFilter(): CorsFilter {
+        val config = CorsConfiguration()
+        config.allowCredentials = true
+        config.allowedOrigins = listOf("http://localhost:5173") // Разрешённые источники
+        config.allowedHeaders = listOf("*") // Разрешённые заголовки
+        config.setAllowedMethods(listOf("GET", "POST", "PUT", "DELETE")) // Разрешённые методы
+        val source = UrlBasedCorsConfigurationSource()
+        source.registerCorsConfiguration("/**", config)
+        return CorsFilter(source)
     }
 
     @Bean
